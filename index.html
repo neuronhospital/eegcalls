@@ -1,0 +1,398 @@
+<!-- PAIR: NEURON_EEG_HTML80_CODE75_FINAL_v8_MONTHLY_SUMMARY | HTML80 -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="theme-color" content="#35106d">
+<title>NEURON HOSPITAL — EEG Booking Portal</title>
+<style>
+:root{--primary:#35106d;--primary2:#6d2db5;--accent:#c21872;--muted:#6d6875;--border:#ddd7e5;--danger:#c62828;--success:#147a45;--shadow:0 10px 30px rgba(45,20,80,.10)}
+*{box-sizing:border-box}html{scroll-behavior:smooth}
+body{margin:0;background:linear-gradient(180deg,#f8f5fb 0,#fff 32%);font-family:Inter,system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;color:#161616}
+button,input,select{font:inherit}button{cursor:pointer}.app{max-width:760px;margin:auto;padding:18px 14px 28px}
+.brand{text-align:center;padding:10px 8px 20px}.hospital{font-size:clamp(27px,8vw,42px);font-weight:900;letter-spacing:.8px;color:var(--primary);line-height:1.05}.city{font-size:clamp(18px,5vw,25px);font-weight:800;letter-spacing:3px;margin-top:5px}.portal{margin:12px auto 0;display:inline-block;background:var(--primary);color:#fff;padding:8px 16px;border-radius:999px;font-size:14px;font-weight:800}
+.modebar{display:grid;grid-template-columns:1fr 1fr;background:#ece6f4;border-radius:16px;padding:5px;margin-bottom:18px;box-shadow:var(--shadow)}.modebar button{border:0;background:transparent;color:#4b4255;padding:13px 8px;border-radius:12px;font-weight:800;font-size:13px}.modebar button.active{background:#fff;color:var(--primary);box-shadow:0 4px 14px rgba(30,10,50,.10)}
+.card{background:#fff;border:1px solid #ebe6ef;border-radius:20px;padding:18px;box-shadow:var(--shadow);margin-bottom:16px}.section-title{margin:0 -18px 16px;padding:12px 18px;background:linear-gradient(90deg,var(--primary),var(--primary2));color:#fff;font-size:17px;font-weight:850}.field{margin-bottom:15px}label{display:block;font-size:13px;font-weight:800;margin-bottom:7px;color:#29232f}.required{color:var(--danger)}
+input,select{width:100%;height:48px;border:1.5px solid var(--border);border-radius:12px;background:#fff;color:#111;padding:0 13px;outline:none;transition:.18s}input:focus,select:focus{border-color:var(--primary2);box-shadow:0 0 0 3px rgba(109,45,181,.12)}input.invalid,select.invalid{border-color:var(--danger);box-shadow:0 0 0 3px rgba(198,40,40,.09)}
+.agegrid{display:grid;grid-template-columns:1.35fr .85fr;gap:10px}.helper{font-size:11px;color:var(--muted);margin-top:5px}.whatsapp-row{display:grid;grid-template-columns:1fr 64px;gap:8px}.date-picker-wrap{position:relative}#eegDateDisplay{width:100%;cursor:pointer}.native-date-picker{position:absolute!important;inset:0;width:100%;height:100%;opacity:0;pointer-events:none}
+.wa-btn{height:48px;border:0;border-radius:12px;background:#20b65b;color:#fff;display:flex;align-items:center;justify-content:center}.wa-btn svg{width:29px;height:29px;display:block}.verify{display:flex;align-items:center;gap:8px;margin-top:8px;font-size:12px;color:#444}.verify input{width:18px;height:18px;accent-color:var(--success)}.lock-note{margin-top:7px;padding:9px 10px;border-radius:10px;background:#fff8e8;color:#735200;font-size:11px;font-weight:700}
+.primary-btn,.secondary-btn{width:100%;min-height:50px;border:0;border-radius:13px;font-weight:850}.primary-btn{background:linear-gradient(135deg,var(--primary),var(--primary2));color:#fff;box-shadow:0 8px 20px rgba(53,16,109,.20)}.primary-btn:disabled{opacity:.6;cursor:not-allowed}.secondary-btn{background:#f2edf7;color:var(--primary);border:1px solid #ded4e9}
+.hidden{display:none!important}.confirm{border:1px solid #b8dfca;background:#f3fbf6}.success-head{color:var(--success);font-size:21px;font-weight:900;margin-bottom:13px}.detail-list{display:grid;gap:8px}.detail{display:flex;justify-content:space-between;gap:15px;border-bottom:1px solid #e9eee9;padding:8px 0;font-size:13px}.detail:last-child{border-bottom:0}.detail b:first-child{color:#666}.detail b:last-child{text-align:right;color:#111}
+.patient-list{display:grid;gap:8px;margin-top:12px}.patient-option{width:100%;text-align:left;border:1px solid var(--border);background:#fff;border-radius:12px;padding:12px}.patient-option strong{display:block;color:var(--primary)}.patient-option small{color:#666}
+.status{font-size:12px;font-weight:750;padding:9px 11px;border-radius:10px;margin:8px 0}.status.error{background:#fff0f0;color:var(--danger)}.status.ok{background:#eef9f2;color:var(--success)}.status.info{background:#f2eff9;color:var(--primary)}
+footer{text-align:center;color:#aaa;font-size:9px;margin:28px 0 4px}.modal-backdrop{position:fixed;inset:0;background:rgba(15,8,25,.48);display:flex;align-items:center;justify-content:center;padding:20px;z-index:50}.modal{width:min(420px,100%);background:#fff;border-radius:18px;padding:20px;box-shadow:0 20px 60px rgba(0,0,0,.25)}.modal h3{margin:0 0 8px;color:var(--primary)}.modal p{margin:0;color:#333;line-height:1.5;font-size:14px}.modal button{margin-top:16px}
+.hidden-frame{display:none}@media(max-width:520px){.app{padding:12px 10px 24px}.card{padding:15px;border-radius:17px}.section-title{margin-left:-15px;margin-right:-15px;padding-left:15px}.detail{align-items:flex-start}}
+
+/* Confirmation-only view: keep branding + portal buttons, show only confirmation */
+body.confirmation-only #newMode {
+  display: block !important;
+}
+body.confirmation-only #bookingForm {
+  display: none !important;
+}
+body.confirmation-only #editMode {
+  display: none !important;
+}
+body.confirmation-only #confirmation {
+  display: block !important;
+}
+
+
+/* Update confirmation-only view */
+body.update-confirmation-only #newMode,
+body.update-confirmation-only #editMode {
+  display: none !important;
+}
+body.update-confirmation-only #confirmation {
+  display: none !important;
+}
+body.update-confirmation-only #updateConfirmation {
+  display: block !important;
+}
+
+
+/* HTML80 monthly EEG retrieval summary — isolated change */
+.eeg-month-summary{
+  margin-top:16px;
+  border:1px solid rgba(185,150,210,.45);
+  border-radius:18px;
+  padding:17px 18px;
+  background:rgba(28,25,31,.72);
+}
+.eeg-month-summary-title{
+  color:#f3c9f5;
+  font-size:20px;
+  font-weight:800;
+  margin-bottom:10px;
+}
+.eeg-month-summary-row{
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  gap:16px;
+  padding:10px 0;
+  border-top:1px solid rgba(255,255,255,.12);
+  color:#b9b6bd;
+  font-size:16px;
+}
+.eeg-month-summary-row strong{
+  color:#fff;
+  font-size:18px;
+}
+/* HTML80 v9 — patient-list heading and serial numbers only */
+.patient-list-heading{
+  margin:16px 0 10px;
+  color:#4caf76;
+  font-size:16px;
+  font-weight:600;
+}
+.patient-option{
+  display:flex;
+  align-items:flex-start;
+  gap:10px;
+}
+.patient-option .patient-serial{
+  flex:0 0 auto;
+  color:var(--primary);
+  font-weight:800;
+  line-height:1.35;
+}
+.patient-option .patient-info{
+  min-width:0;
+  flex:1;
+}
+
+</style>
+</head>
+<body>
+<div class="app">
+<header class="brand"><div class="hospital">NEURON HOSPITAL</div><div class="city">LATUR</div><div class="portal">EEG BOOKING PORTAL</div></header>
+<nav class="modebar"><button id="newModeBtn" class="active" type="button">Book New EEG</button><button id="editModeBtn" type="button">Change Existing EEG Booking</button></nav>
+
+<main id="newMode">
+<form id="bookingForm" novalidate>
+<section class="card"><h2 class="section-title">Patient Details</h2>
+<div class="field"><label for="patientName">Patient Name <span class="required">*</span></label><input id="patientName" maxlength="100" placeholder="Enter patient name"></div>
+<div class="field"><label>Age <span class="required">*</span></label><div class="agegrid"><input id="ageValue" inputmode="decimal" placeholder="Age"><select id="ageUnit"><option value="Days">Days</option><option value="Months">Months</option><option value="Years" selected>Years</option></select></div></div>
+<div class="field"><label for="address">Patient Address / City <span class="required">*</span></label><select id="address"><option>Latur</option><option>Nilanga</option><option>Udgir</option><option>Omerga</option><option>Dharashiv</option><option>Barshi</option><option>Beed</option><option>Ambajogai</option><option>Parli</option><option>Ahmedpur</option><option>Other</option></select></div>
+</section>
+
+<section class="card"><h2 class="section-title">EEG Appointment</h2>
+<div class="field"><label for="eegDateDisplay">Date of EEG <span class="required">*</span></label><div class="date-picker-wrap"><input id="eegDateDisplay" type="text" readonly placeholder="DDMMYYYY"><input id="eegDate" type="date" class="native-date-picker" tabindex="-1"></div><div class="helper">Today's date is selected automatically. Tap the date to open the calendar and select a previous date.</div></div>
+<div class="field hidden" id="actualDateWrap"><label for="actualDate">Actual Date of EEG Done <span class="required">*</span></label><input id="actualDate" type="date"><div class="helper">Use this when the EEG was already performed on an earlier date.</div></div>
+</section>
+
+<section class="card"><h2 class="section-title">WhatsApp Verification</h2>
+<div class="field"><label for="whatsapp">WhatsApp Number <span class="required">*</span></label><div class="whatsapp-row"><input id="whatsapp" inputmode="numeric" maxlength="10" placeholder="10-digit Indian mobile number"><button class="wa-btn" id="waBtn" type="button" aria-label="Open WhatsApp"><svg viewBox="0 0 32 32" aria-hidden="true"><path fill="currentColor" d="M16 3.1C8.87 3.1 3.1 8.87 3.1 16c0 2.28.6 4.43 1.75 6.35L3 29l6.82-1.79A12.83 12.83 0 0 0 16 28.9c7.13 0 12.9-5.77 12.9-12.9S23.13 3.1 16 3.1Zm0 23.45c-1.99 0-3.93-.54-5.63-1.56l-.4-.24-4.05 1.06 1.08-3.94-.26-.41A10.8 10.8 0 1 1 16 26.55Zm5.94-8.05c-.32-.16-1.88-.93-2.17-1.04-.29.11-.5.16-.71.16-.21.32-.81 1.04-.99 1.25-.21.21-.37.24-.68.08-.32-.16-1.35-.5-2.57-1.59-.95-.85-1.59-1.89-1.78-2.21-.18-.32-.02-.49.14-.65.14-.14.32-.37.47-.55.16-.18.21-.31.32-.52.1-.21.05-.39-.03-.55-.08-.16-.71-1.71-.97-2.34-.26-.61-.52-.53-.71-.54h-.6c-.21 0-.55.08-.84.39-.29.32-1.1 1.08-1.1 2.63s1.13 3.05 1.29 3.26c.16.21 2.22 3.39 5.37 4.75.75.32 1.34.21 1.8.13.61-.09 1.88-.77 2.15-1.51.08-.13-.29-.37-.6-.37Z"/></svg></button></div>
+<div class="verify"><input id="waVerified" type="checkbox" disabled><span>WhatsApp action completed for this number</span></div><div class="lock-note">You must tap the WhatsApp button before continuing to the remaining booking information.</div></div>
+</section>
+
+<section class="card"><h2 class="section-title">Referral & Technician</h2><div class="field"><label for="referredBy">Referred By Dr / Hospital <span class="required">*</span></label><input id="referredBy" maxlength="150" placeholder="Enter doctor or hospital name"></div><div class="field"><label for="technician">EEG Technician <span class="required">*</span></label><input id="technician" value="Sanket Katke" maxlength="100"></div></section>
+
+<section class="card"><h2 class="section-title">EEG Payment</h2><div class="field"><label for="payment">Payment Received (₹) <span class="required">*</span></label><input id="payment" type="number" min="0" max="2000" step="1" value="1000"><div class="helper">Allowed range: ₹0 to ₹2000.</div></div></section>
+<section class="card"><button id="submitBtn" class="primary-btn" type="submit">Confirm EEG Booking</button><div id="submitStatus"></div></section>
+</form>
+<section id="confirmation" class="card confirm hidden"><div class="success-head">✓ EEG Booking Confirmed</div><div id="confirmationDetails" class="detail-list"></div><button class="secondary-btn" style="margin-top:16px" type="button" id="newAfterConfirm">Book New EEG</button></section>
+</main>
+
+<main id="editMode" class="hidden">
+<section class="card"><h2 class="section-title">Retrieve Existing EEG Booking</h2><div class="field"><label for="editMonth">Select Month of EEG <span class="required">*</span></label><select id="editMonth"></select></div><button id="retrieveBtn" class="primary-btn" type="button">Retrieve EEG Patients</button><div id="retrieveStatus"></div><div id="patientList" class="patient-list"></div></section>
+<section id="editFormCard" class="card hidden"><h2 class="section-title">Edit Patient Details</h2>
+<input id="editRow" type="hidden"><input id="editAppointmentId" type="hidden">
+<div class="field"><label>Appointment ID</label><input id="editIdDisplay" readonly></div>
+<div class="field"><label for="editName">Patient Name <span class="required">*</span></label><input id="editName"></div>
+<div class="field"><label>Age <span class="required">*</span></label><div class="agegrid"><input id="editAge" inputmode="decimal"><select id="editAgeUnit"><option>Days</option><option>Months</option><option>Years</option></select></div></div>
+<div class="field"><label for="editAddress">Patient Address / City <span class="required">*</span></label><select id="editAddress"><option>Latur</option><option>Nilanga</option><option>Udgir</option><option>Omerga</option><option>Dharashiv</option><option>Barshi</option><option>Beed</option><option>Ambajogai</option><option>Parli</option><option>Ahmedpur</option><option>Other</option></select></div>
+<div class="field"><label for="editDate">Date of EEG <span class="required">*</span></label><input id="editDate" type="date" readonly></div>
+<div class="field hidden" id="editActualWrap"><label for="editActualDate">Actual Date of EEG Done</label><input id="editActualDate" type="date"></div>
+<div class="field"><label for="editWhatsapp">WhatsApp Number <span class="required">*</span></label><input id="editWhatsapp" inputmode="numeric" maxlength="10"></div>
+<div class="field"><label for="editReferred">Referred By Dr / Hospital <span class="required">*</span></label><input id="editReferred"></div>
+<div class="field"><label for="editTechnician">EEG Technician <span class="required">*</span></label><input id="editTechnician"></div>
+<div class="field"><label for="editPayment">Payment Received (₹) <span class="required">*</span></label><input id="editPayment" type="number" min="0" max="2000" step="1"></div>
+<button id="updateBtn" class="primary-btn" type="button">Update Patient Details</button><div id="updateStatus"></div>
+</section>
+</main>
+<section id="updateConfirmation" class="card confirm hidden"><div class="success-head">✓ Patient Details Updated Successfully</div><div id="updateDetails" class="detail-list"></div><button class="secondary-btn" style="margin-top:16px" type="button" id="bookFromEdit">Book New EEG</button></section>
+
+<footer>19082026-12:45-HTML80+CODE75</footer>
+</div>
+
+<iframe name="eegHiddenFrame" id="eegHiddenFrame" class="hidden-frame"></iframe>
+<form id="transportForm" target="eegHiddenFrame" method="POST" class="hidden-frame"><input name="action"><input name="payload"></form>
+
+<div id="modal" class="modal-backdrop hidden"><div class="modal"><h3 id="modalTitle">Please check</h3><p id="modalMessage"></p><button class="primary-btn" type="button" id="modalOk">OK</button></div></div>
+
+<script>
+const API_URL="https://script.google.com/macros/s/AKfycbwpsd1sPonX-3yhNGtaZzG7PPZwIlChf0FCuyuWR6RO_iedaSnFPIbkJn-Fe81LM8s6_A/exec";
+let requestId=null,records=[],selected=null,busy=false;
+const $=id=>document.getElementById(id);
+
+function todayISO(){const d=new Date(new Date().toLocaleString("en-US",{timeZone:"Asia/Kolkata"}));return d.getFullYear()+"-"+String(d.getMonth()+1).padStart(2,"0")+"-"+String(d.getDate()).padStart(2,"0")}
+function ddmmyyyy(iso){if(!iso)return "";const p=String(iso).split("-");return p.length===3?p[2]+p[1]+p[0]:""}
+function displayDate(v){return v?ddmmyyyy(v)||String(v):"—"}
+function mobileOK(v){return /^[6-9]\d{9}$/.test(String(v||"").trim())}
+function ageOK(v,u){if(v===""||!isFinite(v)||Number(v)<0)return false;const n=Number(v);return u==="Days"?n<=3650:u==="Months"?n<=240:n<=150}
+function closeModal(){$("modal").classList.add("hidden")}
+function modal(msg,title="Please check"){$("modalTitle").textContent=title;$("modalMessage").textContent=msg;$("modal").classList.remove("hidden")}
+$("modalOk").onclick=closeModal
+function focusBad(el,msg){if(!el)return;el.classList.add("invalid");try{el.focus({preventScroll:true})}catch(e){}el.scrollIntoView({behavior:"smooth",block:"center"});modal(msg);setTimeout(()=>el.classList.remove("invalid"),1800)}
+function status(id,msg,type){const el=$(id);if(el)el.innerHTML=msg?`<div class="status ${type}">${msg}</div>`:""}
+function makeRequestId(){return window.crypto&&crypto.randomUUID?crypto.randomUUID():"REQ-"+Date.now()+"-"+Math.random().toString(36).slice(2)}
+function apiReady(){if(!API_URL||API_URL.includes("PASTE_YOUR")){modal("Apps Script /exec URL is not configured.","Backend URL required");return false}return true}
+
+/*
+ * Transport architecture:
+ * 1. POST the command through a hidden iframe (no CORS/fetch dependency).
+ * 2. Poll the same /exec URL through JSONP until the server has stored the result.
+ * This is important for standalone HTML hosted outside Apps Script.
+ */
+function postToBackend(action,payload){
+  return new Promise((resolve,reject)=>{
+    if(!apiReady()){reject(new Error("Backend URL is not configured."));return}
+    const form=$("transportForm");
+    form.action=API_URL;
+    form.elements.action.value=action;
+    form.elements.payload.value=JSON.stringify(payload);
+    try{form.submit();resolve()}catch(e){reject(e)}
+  });
+}
+function jsonp(action,payload,timeout=10000){
+  return new Promise((resolve,reject)=>{
+    if(!apiReady()){reject(new Error("Backend URL is not configured."));return}
+    const cb="cb_"+Date.now()+"_"+Math.random().toString(36).slice(2);
+    const script=document.createElement("script");
+    let done=false;
+    const timer=setTimeout(()=>{if(done)return;done=true;cleanup();reject(new Error("Server status check timed out."))},timeout);
+    function cleanup(){clearTimeout(timer);delete window[cb];script.remove()}
+    window[cb]=data=>{if(done)return;done=true;cleanup();if(data&&data.ok===false)reject(new Error(data.message||"Server error."));else resolve(data)}
+    const qs=new URLSearchParams({action,callback:cb,_:Date.now()});
+    Object.keys(payload||{}).forEach(k=>qs.set(k,String(payload[k])));
+    script.src=API_URL+"?"+qs.toString();
+    script.onerror=()=>{if(done)return;done=true;cleanup();reject(new Error("Unable to contact Apps Script backend."))};
+    document.body.appendChild(script);
+  });
+}
+async function waitForStatus(requestId,type,attempts=30){
+  const action=type==="booking"?"getEEGStatus":"getEEGUpdateStatus";
+  let lastErr=null;
+  for(let i=0;i<attempts;i++){
+    try{
+      const r=await jsonp(action,{requestId},8000);
+      if(r&&r.found){
+        if(r.state==="ERROR")throw new Error(r.message||"Server could not complete the request.");
+        if(r.state==="DONE")return r.result;
+      }
+    }catch(e){lastErr=e}
+    await new Promise(r=>setTimeout(r,700));
+  }
+  throw new Error(lastErr&&lastErr.message?lastErr.message:"Server response was not received. Please retry; the same booking request is protected against duplicates.");
+}
+function detailHTML(r){return [["Appointment ID",r.appointmentId],["Patient Name",r.patientName],["Age",(r.age||"")+" "+(r.ageUnit||"")],["WhatsApp Number",r.whatsapp],["Patient Address",r.address],["Date of EEG",r.eegDateDisplay||displayDate(r.eegDate)],["Actual Date of EEG Done",r.actualDateDisplay||displayDate(r.actualDate)],["Referred By",r.referredBy],["EEG Technician",r.technician],["Payment Received","₹"+Number(r.payment||0).toFixed(0)]].map(x=>`<div class="detail"><b>${x[0]}</b><b>${x[1]||"—"}</b></div>`).join("")}
+function showConfirm(r){document.body.classList.add("confirmation-only");$("confirmationDetails").innerHTML=detailHTML(r);$("confirmation").classList.remove("hidden");$("confirmation").scrollIntoView({behavior:"smooth",block:"start"})}
+function showMode(m){
+  const n=m==="new";
+  document.body.classList.remove("confirmation-only","update-confirmation-only");
+  $("confirmation").classList.add("hidden");
+  $("updateConfirmation").classList.add("hidden");
+  $("newMode").classList.toggle("hidden",!n);
+  $("editMode").classList.toggle("hidden",n);
+  $("newModeBtn").classList.toggle("active",n);
+  $("editModeBtn").classList.toggle("active",!n);
+  if(!n)buildMonths();
+  scrollTo({top:0,behavior:"smooth"});
+}
+$("newModeBtn").onclick=()=>showMode("new");$("editModeBtn").onclick=()=>showMode("edit");
+
+function initialiseNewBooking(){
+  const t=todayISO();
+  $("eegDate").value=t;$("eegDate").max=t;$("eegDateDisplay").value=ddmmyyyy(t);
+  $("actualDate").max=t;$("payment").value="1000";$("technician").value="Sanket Katke";
+  $("actualDateWrap").classList.add("hidden");$("actualDate").value="";$("waVerified").checked=false;
+}
+function openEEGDatePicker(){
+  const d=$("eegDate");
+  if(d.showPicker){try{d.showPicker();return}catch(e){}}
+  d.focus();d.click();
+}
+initialiseNewBooking();
+$("eegDateDisplay").onclick=openEEGDatePicker;
+$("eegDate").onchange=()=>{
+  $("eegDateDisplay").value=ddmmyyyy($("eegDate").value);
+  const past=$("eegDate").value<todayISO();
+  $("actualDateWrap").classList.toggle("hidden",!past);
+  if(!past)$("actualDate").value="";
+};
+
+$("waBtn").onclick=()=>{
+  const v=$("whatsapp").value.trim();
+  if(!mobileOK(v)){focusBad($("whatsapp"),"Enter a valid 10-digit Indian WhatsApp number beginning with 6, 7, 8 or 9.");return}
+  $("waVerified").checked=true;
+  window.location.href="https://wa.me/91"+v;
+};
+
+function validateNew(){
+  const checks=[
+    [$("patientName"),$("patientName").value.trim()!=="","Please enter the patient name."],
+    [$("ageValue"),ageOK($("ageValue").value,$("ageUnit").value),"Please enter a valid age."],
+    [$("address"),true,"Please select the patient city/address."],
+    [$("eegDate"),$("eegDate").value!=="","Please select the EEG date."],
+    [$("whatsapp"),mobileOK($("whatsapp").value),"Enter a valid 10-digit Indian WhatsApp number."],
+    [$("waVerified"),$("waVerified").checked,"Tap the WhatsApp button before continuing."],
+    [$("referredBy"),$("referredBy").value.trim()!=="","Please enter the referring doctor or hospital."],
+    [$("technician"),$("technician").value.trim()!=="","Please enter the EEG technician name."],
+    [$("payment"),$("payment").value!==""&&Number($("payment").value)>=0&&Number($("payment").value)<=2000,"Payment must be between ₹0 and ₹2000."]
+  ];
+  for(const [el,ok,msg] of checks)if(!ok){focusBad(el,msg);return false}
+  if($("eegDate").value<todayISO()){
+    if(!$("actualDate").value){focusBad($("actualDate"),"Please select the Actual Date of EEG Done.");return false}
+    if($("actualDate").value>$("eegDate").value||$("actualDate").value>todayISO()){focusBad($("actualDate"),"Actual EEG date is invalid.");return false}
+  }
+  return true;
+}
+function newPayload(){
+  if(!requestId)requestId=makeRequestId();
+  return{requestId,patientName:$("patientName").value.trim(),age:$("ageValue").value.trim(),ageUnit:$("ageUnit").value,address:$("address").value,eegDate:$("eegDate").value,actualDate:$("actualDate").value||"",whatsapp:$("whatsapp").value.trim(),referredBy:$("referredBy").value.trim(),technician:$("technician").value.trim(),payment:String(Number($("payment").value))}
+}
+$("bookingForm").onsubmit=async e=>{
+  e.preventDefault();
+  if(busy||!validateNew())return;
+  if(!requestId)requestId=makeRequestId();
+  busy=true;$("submitBtn").disabled=true;$("submitBtn").textContent="Booking… Please wait";
+  status("submitStatus","Saving booking securely. Please do not close the page.","info");
+  try{
+    const p=newPayload();
+    await postToBackend("bookEEG",p);
+    const r=await waitForStatus(requestId,"booking",35);
+    showConfirm(r);
+    status("submitStatus","","");
+  }catch(err){
+    status("submitStatus","The booking request may already have reached the server. You may safely tap Confirm EEG Booking again; the same Request ID prevents duplicate booking. "+(err.message||"Please retry."),"error");
+  }finally{
+    busy=false;$("submitBtn").disabled=false;$("submitBtn").textContent="Confirm EEG Booking";
+  }
+};
+function resetNew(){document.body.classList.remove("confirmation-only","update-confirmation-only");document.body.classList.remove("confirmation-only");$("bookingForm").reset();requestId=null;selected=null;initialiseNewBooking();$("confirmation").classList.add("hidden");$("submitStatus").innerHTML="";scrollTo({top:0,behavior:"smooth"})}
+$("newAfterConfirm").onclick=resetNew;
+
+function buildMonths(){
+  const d=new Date(new Date().toLocaleString("en-US",{timeZone:"Asia/Kolkata"}));
+  const a=[new Date(d.getFullYear(),d.getMonth(),1),new Date(d.getFullYear(),d.getMonth()-1,1)];
+  $("editMonth").innerHTML=a.map((x,i)=>`<option value="${x.getFullYear()}-${String(x.getMonth()+1).padStart(2,"0")}">${x.toLocaleString("en-IN",{month:"long",year:"numeric"})}${i===0?" (Current)":""}</option>`).join("")
+}
+buildMonths();
+
+$("retrieveBtn").onclick=async()=>{
+  if(!apiReady())return;
+  $("retrieveBtn").disabled=true;$("retrieveBtn").textContent="Retrieving…";
+  status("retrieveStatus","Loading EEG patients…","info");$("patientList").innerHTML="";
+  try{
+    const r=await jsonp("getEEGRecordsByMonth",{monthKey:$("editMonth").value},12000);
+    records=r.records||[];
+    if(!records.length){status("retrieveStatus","No EEG records found for the selected month.","info");return}
+    {
+      const monthText = $("editMonth").options[$("editMonth").selectedIndex].text
+        .replace(/\s*\(Current\)\s*/i,"").trim();
+      const totalCharges = records.reduce((sum,p)=>{
+        const n = Number(String(p.payment ?? 0).replace(/[₹,\s]/g,""));
+        return sum + (Number.isFinite(n) ? n : 0);
+      },0);
+
+      $("retrieveStatus").innerHTML =
+        `<div class="eeg-month-summary">
+          <div class="eeg-month-summary-title">${esc(monthText)} - EEG Details</div>
+          <div class="eeg-month-summary-row">
+            <span>Total EEG</span>
+            <strong>${records.length.toLocaleString("en-IN")}</strong>
+          </div>
+          <div class="eeg-month-summary-row">
+            <span>Total Charges Collected</span>
+            <strong>₹${totalCharges.toLocaleString("en-IN")}</strong>
+          </div>
+        </div>`;
+    }
+    $("patientList").innerHTML=
+      `<div class="patient-list-heading">Select Patient to Edit</div>` +
+      records.map((p,i)=>`<button class="patient-option" type="button" data-i="${i}"><span class="patient-serial">${i+1}.</span><span class="patient-info"><strong>${esc(p.patientName)}</strong><small>${esc(p.appointmentId)} • ${esc(p.eegDateDisplay)} • ${esc(p.whatsapp)}</small></span></button>`).join("");
+    document.querySelectorAll(".patient-option").forEach(b=>b.onclick=()=>selectPatient(Number(b.dataset.i)));
+  }catch(e){status("retrieveStatus",e.message,"error")}
+  finally{$("retrieveBtn").disabled=false;$("retrieveBtn").textContent="Retrieve EEG Patients"}
+};
+function esc(s){return String(s??"").replace(/[&<>"']/g,m=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#039;"}[m]))}
+function selectPatient(i){
+  selected=records[i];
+  $("editRow").value=selected.row;$("editAppointmentId").value=selected.appointmentId;$("editIdDisplay").value=selected.appointmentId;
+  $("editName").value=selected.patientName;$("editAge").value=selected.age;$("editAgeUnit").value=selected.ageUnit;$("editAddress").value=selected.address;
+  $("editDate").value=selected.eegDateIso||"";$("editActualDate").value=selected.actualDateIso||"";$("editActualWrap").classList.toggle("hidden",!selected.actualDateIso);
+  $("editWhatsapp").value=selected.whatsapp;$("editReferred").value=selected.referredBy;$("editTechnician").value=selected.technician;$("editPayment").value=selected.payment;
+  $("editFormCard").classList.remove("hidden");$("updateConfirmation").classList.add("hidden");$("editFormCard").scrollIntoView({behavior:"smooth",block:"start"})
+}
+function validateEdit(){
+  const c=[
+    [$("editName"),$("editName").value.trim()!=="","Please enter the patient name."],
+    [$("editAge"),ageOK($("editAge").value,$("editAgeUnit").value),"Please enter a valid age."],
+    [$("editAddress"),true,"Please select the patient city/address."],
+    [$("editWhatsapp"),mobileOK($("editWhatsapp").value),"Enter a valid 10-digit Indian WhatsApp number."],
+    [$("editReferred"),$("editReferred").value.trim()!=="","Please enter the referring doctor or hospital."],
+    [$("editTechnician"),$("editTechnician").value.trim()!=="","Please enter the EEG technician name."],
+    [$("editPayment"),$("editPayment").value!==""&&Number($("editPayment").value)>=0&&Number($("editPayment").value)<=2000,"Payment must be between ₹0 and ₹2000."]
+  ];
+  for(const [el,ok,msg] of c)if(!ok){focusBad(el,msg);return false}
+  return true
+}
+$("updateBtn").onclick=async()=>{
+  if(!selected||!validateEdit())return;
+  const rid=makeRequestId();
+  $("updateBtn").disabled=true;$("updateBtn").textContent="Updating…";status("updateStatus","Saving updated details…","info");
+  try{
+    const p={requestId:rid,row:Number($("editRow").value),appointmentId:$("editAppointmentId").value,patientName:$("editName").value.trim(),age:$("editAge").value.trim(),ageUnit:$("editAgeUnit").value,address:$("editAddress").value,eegDate:$("editDate").value,actualDate:$("editActualDate").value||"",whatsapp:$("editWhatsapp").value.trim(),referredBy:$("editReferred").value.trim(),technician:$("editTechnician").value.trim(),payment:String(Number($("editPayment").value))};
+    await postToBackend("updateEEGPatient",p);
+    const r=await waitForStatus(rid,"update",35);
+    document.body.classList.add("update-confirmation-only");$("updateDetails").innerHTML=detailHTML(r);$("updateConfirmation").classList.remove("hidden");$("updateConfirmation").scrollIntoView({behavior:"smooth",block:"start"});status("updateStatus","","");
+  }catch(e){status("updateStatus","The update may already have been saved. Please retrieve the month again before retrying. "+e.message,"error")}
+  finally{$("updateBtn").disabled=false;$("updateBtn").textContent="Update Patient Details"}
+};
+$("bookFromEdit").onclick=()=>{document.body.classList.remove("update-confirmation-only","confirmation-only");showMode("new");resetNew()};
+$("editDate").onchange=()=>{const past=$("editDate").value<todayISO();$("editActualWrap").classList.toggle("hidden",!past);if(!past)$("editActualDate").value=""};
+</script>
+</body></html>
