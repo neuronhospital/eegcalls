@@ -327,7 +327,18 @@ $("retrieveBtn").onclick=async()=>{
   $("retrieveBtn").disabled=true;$("retrieveBtn").textContent="Retrieving…";
   status("retrieveStatus","Loading EEG patients…","info");$("patientList").innerHTML="";
   try{
-    const r=await jsonp("getEEGRecordsByMonth",{monthKey:$("editMonth").value},12000);
+    let r=null,lastErr=null;
+    for(let attempt=1;attempt<=3;attempt++){
+      try{
+        status("retrieveStatus",attempt===1?"Loading EEG patients…":"Server is responding slowly. Retrying…","info");
+        r=await jsonp("getEEGRecordsByMonth",{monthKey:$("editMonth").value},20000);
+        break;
+      }catch(e){
+        lastErr=e;
+        if(attempt<3) await new Promise(resolve=>setTimeout(resolve,1500));
+      }
+    }
+    if(!r) throw lastErr||new Error("Unable to contact Apps Script backend.");
     records=r.records||[];
     if(!records.length){status("retrieveStatus","No EEG records found for the selected month.","info");return}
     {
