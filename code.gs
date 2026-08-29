@@ -684,9 +684,9 @@ function bookAppointment_(data) {
       sheet.getRange(newRowNumber, 1, 1, HEADERS.length).setValues([row]);
       v96CachePut_(city,'request',requestId,newRowNumber);
       v96CachePut_(city,'appointment',appointmentId,newRowNumber);
-      addBookingIndexes_(ss,city,dateString,phone,requestId,newRowNumber);
-      updatePatientIndex_(ss,city,phone,newRowNumber);
-      updatePatientIndex_(ss,city,phone,newRowNumber);
+      // v105: index sheet maintenance moved out of booking critical path.
+      // Cache is updated immediately; index sheets remain for recovery/rebuild.
+      putPatientCache_(city,phone,{rowNumber:newRowNumber,city:city});
 
       // Google Sheets may inherit the header row's formatting when a new
       // row is inserted immediately below row 1. Explicitly reset the
