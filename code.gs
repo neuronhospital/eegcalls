@@ -685,6 +685,8 @@ function bookAppointment_(data) {
       v96CachePut_(city,'request',requestId,newRowNumber);
       v96CachePut_(city,'appointment',appointmentId,newRowNumber);
       addBookingIndexes_(ss,city,dateString,phone,requestId,newRowNumber);
+      updatePatientIndex_(ss,city,phone,newRowNumber);
+      updatePatientIndex_(ss,city,phone,newRowNumber);
 
       // Google Sheets may inherit the header row's formatting when a new
       // row is inserted immediately below row 1. Explicitly reset the
@@ -1665,6 +1667,104 @@ function freshEEGAgeUnit_(value) {
 }
 
 
+
+
+// v104 Patient_Index helpers: fast Follow-up retrieval layer
+function getPatientIndexSheet_(ss){
+  return getOrCreateBookingIndexSheet_(ss,'Patient_Index',['Key','Row','City']);
+}
+
+function patientIndexKey_(city, phone){
+  return String(city||'').trim().toLowerCase()+"_"+normalizePhone_(phone);
+}
+
+function getPatientFromCache_(city,phone){
+  try{
+    const c=CacheService.getScriptCache().get('patient:'+patientIndexKey_(city,phone));
+    return c ? JSON.parse(c) : null;
+  }catch(e){return null;}
+}
+
+function putPatientCache_(city,phone,value){
+  try{
+    CacheService.getScriptCache().put('patient:'+patientIndexKey_(city,phone),JSON.stringify(value),21600);
+  }catch(e){}
+}
+
+function getPatientIndexRow_(ss,city,phone){
+  const cached=getPatientFromCache_(city,phone);
+  if(cached) return cached;
+  const sh=getPatientIndexSheet_(ss);
+  const last=sh.getLastRow();
+  if(last<2) return null;
+  const data=sh.getRange(2,1,last-1,3).getValues();
+  const key=patientIndexKey_(city,phone);
+  for(const r of data){
+    if(r[0]===key){
+      const out={rowNumber:r[1],city:r[2]};
+      putPatientCache_(city,phone,out);
+      return out;
+    }
+  }
+  return null;
+}
+
+function updatePatientIndex_(ss,city,phone,rowNumber){
+  const sh=getPatientIndexSheet_(ss);
+  const key=patientIndexKey_(city,phone);
+  sh.appendRow([key,rowNumber,city]);
+  putPatientCache_(city,phone,{rowNumber:rowNumber,city:city});
+}
+
+
+
+// v104 Patient_Index helpers: fast Follow-up retrieval layer
+function getPatientIndexSheet_(ss){
+  return getOrCreateBookingIndexSheet_(ss,'Patient_Index',['Key','Row','City']);
+}
+
+function patientIndexKey_(city, phone){
+  return String(city||'').trim().toLowerCase()+"_"+normalizePhone_(phone);
+}
+
+function getPatientFromCache_(city,phone){
+  try{
+    const c=CacheService.getScriptCache().get('patient:'+patientIndexKey_(city,phone));
+    return c ? JSON.parse(c) : null;
+  }catch(e){return null;}
+}
+
+function putPatientCache_(city,phone,value){
+  try{
+    CacheService.getScriptCache().put('patient:'+patientIndexKey_(city,phone),JSON.stringify(value),21600);
+  }catch(e){}
+}
+
+function getPatientIndexRow_(ss,city,phone){
+  const cached=getPatientFromCache_(city,phone);
+  if(cached) return cached;
+  const sh=getPatientIndexSheet_(ss);
+  const last=sh.getLastRow();
+  if(last<2) return null;
+  const data=sh.getRange(2,1,last-1,3).getValues();
+  const key=patientIndexKey_(city,phone);
+  for(const r of data){
+    if(r[0]===key){
+      const out={rowNumber:r[1],city:r[2]};
+      putPatientCache_(city,phone,out);
+      return out;
+    }
+  }
+  return null;
+}
+
+function updatePatientIndex_(ss,city,phone,rowNumber){
+  const sh=getPatientIndexSheet_(ss);
+  const key=patientIndexKey_(city,phone);
+  sh.appendRow([key,rowNumber,city]);
+  putPatientCache_(city,phone,{rowNumber:rowNumber,city:city});
+}
+
 function getEEGPatientsByWhatsApp_(data) {
   /*
    * v69 FAST RETRIEVAL:
@@ -1690,6 +1790,15 @@ function getEEGPatientsByWhatsApp_(data) {
   const ss = SpreadsheetApp.getActiveSpreadsheet();
   const sheet = ss.getSheetByName(city);
 
+  // v104 fast path: Patient_Index + CacheService
+  const indexed = getPatientIndexRow_(ss, city, phone);
+  if (indexed && sheet) {
+    const range = sheet.getRange(indexed.rowNumber, 1, 1, HEADERS.length);
+    const row = range.getValues()[0];
+    const shown = range.getDisplayValues()[0];
+    return [{row:row,rowNumber:indexed.rowNumber,city:city}];
+  }
+
   if (!sheet || sheet.getLastRow() < 2) {
     throw new Error("No patient records are available in the " + city + " sheet.");
   }
@@ -1706,7 +1815,7 @@ function getEEGPatientsByWhatsApp_(data) {
    */
   const phoneValues = sheet
     .getRange(2, 8, rowCount, 1)
-    .getDisplayValues();
+    .getValues();
 
   const candidateRows = [];
 
@@ -1925,6 +2034,15 @@ function findPatientsByWhatsAppInCityAndDate_(ss, city, phone, today) {
  */
 function findPatientsByWhatsAppInCity_(ss, city, phone) {
   const sheet = ss.getSheetByName(city);
+
+  // v104 fast path: Patient_Index + CacheService
+  const indexed = getPatientIndexRow_(ss, city, phone);
+  if (indexed && sheet) {
+    const range = sheet.getRange(indexed.rowNumber, 1, 1, HEADERS.length);
+    const row = range.getValues()[0];
+    const shown = range.getDisplayValues()[0];
+    return [{row:row,rowNumber:indexed.rowNumber,city:city}];
+  }
 
   if (!sheet || sheet.getLastRow() < 2) {
     return [];
